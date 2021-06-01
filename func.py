@@ -8,4 +8,10 @@ def gogo(my):
         print("안간다")
 
 #돈을 넣으면 2배가 뻥튀기
+def ck_idpw(ret):
+    #if id == 'asd' and pw == '123':
+    if ret != None :
+        return '로그인 성공'
+    else:
+        return '로그인 실패'
  
