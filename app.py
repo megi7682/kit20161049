@@ -1,8 +1,9 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session, redirect
 from func import ck_idpw # 내가만든 ip pw 체크 함수
 import db
 
 app = Flask(__name__)
+app.secret_key = b'aaa!111/'
 
 @app.route('/')
 def joro():
@@ -12,9 +13,12 @@ def joro():
 def asd():
     return render_template("form.html")
 
-@app.route('/naver')
-def naver():
-    return '안녕 나는 네이버야~'
+@app.route('/coin')
+def coin():
+    if 'user' in session:
+        return '여기는 코인 거래소 !'
+    else :
+        return redirect('/login')
 
 @app.route('/join')
 def join():
@@ -42,6 +46,8 @@ def login():
         pw = request.form['pwd']
         print(id, pw) 
         ret = db.get_idpw(id,pw)
+        if ret != None:
+            session['user'] = ret[3]
         return ck_idpw(ret)
 
 
